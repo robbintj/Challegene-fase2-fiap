@@ -69,6 +69,13 @@ public class RestaurantService {
         restaurantRepository.deleteById(id);
     }
 
+    /**
+     * Regra de negócio: apenas usuários do tipo "Dono de Restaurante" podem ser responsáveis
+     * por um restaurante. Clientes não podem cadastrar nem assumir restaurantes.
+     *
+     * @throws ResourceNotFoundException se o usuário não existir
+     * @throws BusinessRuleException     se o usuário não for do tipo "Dono de Restaurante"
+     */
     private void assertOwnerIsValid(Long ownerId) {
         User owner = userRepository.findById(ownerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário", ownerId));
